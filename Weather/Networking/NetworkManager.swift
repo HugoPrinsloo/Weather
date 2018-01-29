@@ -10,11 +10,17 @@ import Foundation
 
 enum City {
     case capetown
-    
+    case tokyo
+    case berlin
+        
     var url: URL {
         switch self {
         case .capetown:
             return URL(string: "http://api.openweathermap.org/data/2.5/weather?id=3369157&units=metric&appid=6942ae4a2643a8dd39dc2a452fc4653d")!
+        case .tokyo:
+            return URL(string: "http://api.openweathermap.org/data/2.5/weather?id=1850144&units=metric&appid=6942ae4a2643a8dd39dc2a452fc4653d")!
+        case .berlin:
+            return URL(string: "http://api.openweathermap.org/data/2.5/weather?id=2950159&units=metric&appid=6942ae4a2643a8dd39dc2a452fc4653d")!
         }
     }
 }
@@ -51,7 +57,7 @@ struct Weather: Codable {
 }
 
 struct Main: Codable {
-    let currentTemperature: Int
+    let currentTemperature: Float
     let pressure: Int
     let humidity: Int
     
@@ -62,7 +68,7 @@ struct Main: Codable {
 }
 
 struct Wind: Codable {
-    let speed: Double
+    let speed: Float
     let deg: Int
 }
 

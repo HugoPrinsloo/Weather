@@ -10,19 +10,32 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private let weatherProvider = WeatherProvider()
+    private var weatherProvider: WeatherProvider
     private var weather: WeatherDisplay?
+    private var city: City
     
     private let tableView: UITableView = {
         let t = UITableView()
         t.translatesAutoresizingMaskIntoConstraints = false
         t.backgroundColor = .black
-        t.backgroundView = nil
+        t.backgroundView = BlackView()
+        t.tableFooterView = UIView()
         return t
     }()
     
+    init(city: City) {
+        weatherProvider = WeatherProvider(city: city)
+        self.city = city
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = title(for: city)
         
         view.backgroundColor = .black
         
@@ -38,6 +51,30 @@ class MainViewController: UIViewController {
         tableView.register(WeatherCell.self, forCellReuseIdentifier: "Cell")
         
         weatherProvider.delegate = self
+        
+    }
+    
+    private func title(for city: City) -> String {
+        switch city {
+        case .capetown:
+            return "Cape Town"
+        case .berlin:
+            return "Berlin"
+        case .tokyo:
+            return "Tokyo"
+        }
+    }
+    
+}
+
+class BlackView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .black
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -53,25 +90,27 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             cell.titleLabel.text = "Condition:"
             cell.valueLabel.text = weather.description
+            cell.icon.image = #imageLiteral(resourceName: "Condution")
         case 1:
             cell.titleLabel.text = "Current Temp:"
-            cell.valueLabel.text = String(describing: weather.currentTemperature)
+            cell.valueLabel.text = "\(String(describing: weather.currentTemperature))°C"
             cell.icon.image = #imageLiteral(resourceName: "Temp")
         case 2:
             cell.titleLabel.text = "Humidity:"
-            cell.valueLabel.text = String(describing: weather.humidity)
+            cell.valueLabel.text = "\(String(describing: weather.humidity))%"
             cell.icon.image = #imageLiteral(resourceName: "Humidity")
         case 3:
             cell.titleLabel.text = "Pressure:"
-            cell.valueLabel.text = String(describing: weather.pressure)
+            cell.valueLabel.text = "\(String(describing: weather.pressure))"
             cell.icon.image = #imageLiteral(resourceName: "Pressure")
         case 4:
             cell.titleLabel.text = "Wind:"
-            cell.valueLabel.text = String(describing: weather.windSpeed)
+            cell.valueLabel.text = "\(String(describing: weather.windSpeed))km/h"
             cell.icon.image = #imageLiteral(resourceName: "WindSpeed")
         default:
             break
         }
+        cell.selectionStyle = .none
         return cell
     }
     

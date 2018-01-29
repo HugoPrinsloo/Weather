@@ -16,6 +16,7 @@
 		6E65B092201DE89C00C997B4 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65B091201DE89C00C997B4 /* MainViewController.swift */; };
 		6E65B094201DEBCC00C997B4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65B093201DEBCC00C997B4 /* NetworkManager.swift */; };
 		6E65B098201E0C3B00C997B4 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E65B097201E0C3B00C997B4 /* WeatherService.swift */; };
+		6EBFE251201E511F006CACF7 /* CitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBFE250201E511F006CACF7 /* CitySelectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		6E65B091201DE89C00C997B4 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		6E65B093201DEBCC00C997B4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6E65B097201E0C3B00C997B4 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		6EBFE250201E511F006CACF7 /* CitySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				6E65B063201DE7C200C997B4 /* AppDelegate.swift */,
 				6E65B091201DE89C00C997B4 /* MainViewController.swift */,
+				6EBFE250201E511F006CACF7 /* CitySelectionViewController.swift */,
 				6E65B099201E19C400C997B4 /* Networking */,
 				6E65B067201DE7C200C997B4 /* Main.storyboard */,
 				6E65B06A201DE7C300C997B4 /* Assets.xcassets */,
@@ -275,6 +278,7 @@
 			files = (
 				6E65B098201E0C3B00C997B4 /* WeatherService.swift in Sources */,
 				6E65B094201DEBCC00C997B4 /* NetworkManager.swift in Sources */,
+				6EBFE251201E511F006CACF7 /* CitySelectionViewController.swift in Sources */,
 				6E65B092201DE89C00C997B4 /* MainViewController.swift in Sources */,
 				6E65B064201DE7C200C997B4 /* AppDelegate.swift in Sources */,
 			);

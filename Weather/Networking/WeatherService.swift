@@ -18,7 +18,7 @@ struct WeatherDisplay {
     let currentTemperature: Int
     let humidity: Int
     let pressure: Int
-    let windSpeed: Double
+    let windSpeed: Int
     let windDirection: Int
 }
 
@@ -29,11 +29,11 @@ class WeatherProvider {
     
     private let networkManager = NetworkManager()
     
-    init() {
-        networkManager.getWeather(for: .capetown) { [weak self] (weatherData, error) in
+    init(city: City) {
+        networkManager.getWeather(for: city) { [weak self] (weatherData, error) in
             guard error == nil else { return }
             if let data = weatherData {
-                let weather = WeatherDisplay(name: data.name, description: data.weather.first?.description ?? "", currentTemperature: data.main.currentTemperature, humidity: data.main.humidity, pressure: data.main.pressure, windSpeed: data.wind.speed, windDirection: data.wind.deg)
+                let weather = WeatherDisplay(name: data.name, description: data.weather.first?.description ?? "", currentTemperature: Int(roundf(Float(data.main.currentTemperature))), humidity: data.main.humidity, pressure: data.main.pressure, windSpeed: Int(roundf(data.wind.speed)), windDirection: data.wind.deg)
                 self?.delegate?.weatherProvider(didUpdateWeatherData: weather)
             }
         }
