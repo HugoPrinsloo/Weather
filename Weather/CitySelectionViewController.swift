@@ -64,6 +64,8 @@ class CitySelectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.barStyle = .black
+        
         title = "Select City"
         
         view.backgroundColor = .black

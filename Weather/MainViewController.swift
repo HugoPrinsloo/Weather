@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class MainViewController: UIViewController {
     
@@ -49,6 +50,30 @@ class MainViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         
         tableView.register(WeatherCell.self, forCellReuseIdentifier: "Cell")
+        tableView.alpha = 0
+        
+        
+        let animationView = LOTAnimationView(name: "snap_loader_white", bundle: Bundle(for: MainViewController.self))
+        animationView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100)
+        animationView.center = view.center
+
+
+        animationView.contentMode = .scaleAspectFit
+        view.addSubview(animationView)
+        
+        animationView.loopAnimation = false
+        
+        animationView.play { [weak self] _ in
+//            animationView.play(completion: { _ in
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                self?.tableView.alpha = 1
+            })
+            
+            animationView.isHidden = true
+
+//            })
+        }
         
         weatherProvider.delegate = self
         
