@@ -38,6 +38,7 @@ class SplashScreenViewController: UIViewController {
 
         animationView.loopAnimation = false
         
+        animationView.play()
         
 
         animationView.play { [weak self] _ in

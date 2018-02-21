@@ -15,6 +15,9 @@ class MainViewController: UIViewController {
     private var weather: WeatherDisplay?
     private var city: City
     
+    private let animationView = LOTAnimationView(name: "snap_loader_white", bundle: Bundle(for: MainViewController.self))
+
+    
     private let tableView: UITableView = {
         let t = UITableView()
         t.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +56,6 @@ class MainViewController: UIViewController {
         tableView.alpha = 0
         
         
-        let animationView = LOTAnimationView(name: "snap_loader_white", bundle: Bundle(for: MainViewController.self))
         animationView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100)
         animationView.center = view.center
 
@@ -61,21 +63,13 @@ class MainViewController: UIViewController {
         animationView.contentMode = .scaleAspectFit
         view.addSubview(animationView)
         
+        weatherProvider.delegate = self
+    
         animationView.loopAnimation = false
         
-        animationView.play { [weak self] _ in
-//            animationView.play(completion: { _ in
-            
-            UIView.animate(withDuration: 0.3, animations: {
-                self?.tableView.alpha = 1
-            })
-            
-            animationView.isHidden = true
-
-//            })
-        }
+        showAnimation()
         
-        weatherProvider.delegate = self
+        navigationController?.navigationItem.leftBarButtonItem = backBarButton
         
     }
     
@@ -90,7 +84,66 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func showAnimation() {
+        animationView.play { [weak self] _ in
+            guard self?.weather != nil else {
+                self?.showAnimation()
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+                UIView.animate(withDuration: 0.3, animations: {
+                    self?.tableView.alpha = 1
+                })
+                
+                self?.animationView.isHidden = true
+            }
+
+            
+            
+        }
+    }
+    
+    weak var backBarButton: UIBarButtonItem! {
+        didSet {
+            
+            backBarButton.customView = AnimationView()
+//            rightBarButton.customView!.transform = CGAffineTransformMakeScale(0, 0)
+            
+            
+//            iconButton.addTarget(self, action: "tappedRightButton", forControlEvents: .TouchUpInside)
+        }
+    }
+    
 }
+
+class AnimationView: UIView {
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        
+        let animationView = LOTAnimationView(name: "backButton", bundle: Bundle(for: AnimationView.self))
+        animationView.center = self.center
+        animationView.contentMode = .scaleAspectFill
+        addSubview(animationView)
+        
+        animationView.play()
+        animationView.loopAnimation = false
+        
+    }
+}
+
 
 class BlackView: UIView {
     override init(frame: CGRect) {
@@ -155,9 +208,6 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: WeatherProviderDelegate {
     func weatherProvider(didUpdateWeatherData weather: WeatherDisplay) {
         self.weather = weather
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
     }
 }
 

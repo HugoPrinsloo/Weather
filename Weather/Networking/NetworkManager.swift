@@ -49,6 +49,7 @@ struct CurrentLocalWeather: Codable {
     let wind: Wind
 }
 
+
 struct Weather: Codable {
     let description: String
     let icon: String
@@ -60,7 +61,7 @@ struct Main: Codable {
     let currentTemperature: Float
     let pressure: Int
     let humidity: Int
-    
+
     private enum CodingKeys: String, CodingKey {
         case currentTemperature = "temp"
         case pressure, humidity
