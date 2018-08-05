@@ -37,9 +37,7 @@ class SplashScreenViewController: UIViewController {
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -175).isActive = true
 
         animationView.loopAnimation = false
-        
-        animationView.play()
-        
+                
 
         animationView.play { [weak self] _ in
             let vc = CitySelectionViewController()
